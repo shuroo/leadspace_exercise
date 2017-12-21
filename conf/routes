@@ -3,11 +3,11 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.HomeController.index
+GET     /                           controllers.DataDictionaryController.index
 
-GET     /categorize                 controllers.HomeController.categorize(phrase:String)
+GET     /categorize                 controllers.DataDictionaryController.categorize(phrase:String)
 
-GET    /update_dictionary          controllers.HomeController.updateDataDictionary(fileNameAndPath:String)
+GET    /update_dictionary          controllers.DataDictionaryController.updateDataDictionary(fileNameAndPath:String)
 
 # An example controller showing how to use dependency injection
 #GET     /count                      controllers.CountController.count

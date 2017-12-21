@@ -1,4 +1,4 @@
-package business_logic;
+package models;
 
 /**
  * Created by shirirave on 21/12/2017.

@@ -1,4 +1,4 @@
-package business_logic;
+package models;
 
 import java.util.Iterator;
 import java.util.Vector;

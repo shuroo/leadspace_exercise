@@ -1,9 +1,9 @@
 package controllers;
 
-import business_logic.DataDictionary;
-import business_logic.DataDictionaryUpdateResult;
-import business_logic.PhraseProcessor;
-import business_logic.PhraseResult;
+import models.DataDictionary;
+import models.DataDictionaryUpdateResult;
+import models.PhraseProcessor;
+import models.PhraseResult;
 import com.google.inject.Inject;
 import play.Logger;
 import play.mvc.*;
@@ -15,7 +15,7 @@ import java.util.Vector;
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
  */
-public class HomeController extends Controller {
+public class DataDictionaryController extends Controller {
 
     @Inject
     DataDictionary data_dictionary ;

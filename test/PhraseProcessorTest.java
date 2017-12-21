@@ -1,5 +1,5 @@
-import business_logic.PhraseProcessor;
-import business_logic.PhraseResult;
+import models.PhraseProcessor;
+import models.PhraseResult;
 import org.junit.Test;
 
 import java.util.Vector;
