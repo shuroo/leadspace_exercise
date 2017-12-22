@@ -1,5 +1,6 @@
 package models;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -16,7 +17,7 @@ public class PhraseProcessor {
      * @param data
      * @return
      */
-    public  PhraseResult getMaximalWordInDictionary(String sub_phrase,String phrase,Vector<String> data){
+    public  PhraseResult getMaximalWordInDictionary(String sub_phrase,String phrase,HashSet<String> data){
         Iterator<String> word_iterator = data.iterator();
         Integer max_word_length = 0;
         // Max word present in the data-store -
@@ -37,7 +38,7 @@ public class PhraseProcessor {
         return new PhraseResult(offset,sub_phrase_offset,max_word);
     }
 
-    public Vector<PhraseResult> aggregatePhraseResults(String phrase,Vector<String> data){
+    public Vector<PhraseResult> aggregatePhraseResults(String phrase,HashSet<String> data){
         Vector<PhraseResult> phrase_results = new Vector<PhraseResult>() ;
         String sub_phrase = phrase;
         PhraseResult next_word = getMaximalWordInDictionary(sub_phrase,phrase,data);

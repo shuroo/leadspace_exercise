@@ -3,6 +3,7 @@ package models;
 import play.Logger;
 
 import java.io.*;
+import java.util.HashSet;
 import java.util.Vector;
 /**
  * Created by shirirave on 20/12/2017.
@@ -12,9 +13,9 @@ import java.util.Vector;
  */
 public class DataDictionary {
 
-    private Vector<String> word_dictionary = new Vector<String>();
+    private HashSet<String> word_dictionary = new HashSet<String>();
 
-    public Vector<String> getWordDictionary() {
+    public HashSet<String> getWordDictionary() {
         return word_dictionary;
     }
 
@@ -25,12 +26,11 @@ public class DataDictionary {
      * Use this endpoint related to update the data-distionary to the following default values:
      */
     public void init(){
-        Vector<String> data = new Vector();
+        HashSet<String> data = new HashSet();
         data.add("President");
         data.add("Vice President");
         data.add("Sales");
         data.add("Marketing");
-        data.add("President");
         data.add("IT");
         data.add("CFO");
         data.add("CTO");
@@ -83,6 +83,5 @@ public class DataDictionary {
 
 
     }
-
 
 }
