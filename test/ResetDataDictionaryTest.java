@@ -1,19 +1,8 @@
 import models.DataDictionary;
-import models.PhraseProcessor;
-import models.PhraseResult;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
-import play.Logger;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Vector;
+import java.io.File;
 
 /**
  * Created by shirirave on 22/12/2017.

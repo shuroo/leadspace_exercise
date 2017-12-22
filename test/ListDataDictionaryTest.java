@@ -1,12 +1,8 @@
 import models.DataDictionary;
-import models.PhraseProcessor;
-import models.PhraseResult;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.Vector;
 
 /**
  * Created by shirirave on 22/12/2017.

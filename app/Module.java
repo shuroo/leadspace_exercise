@@ -1,5 +1,5 @@
-import models.DataDictionary;
 import com.google.inject.AbstractModule;
+import models.DataDictionary;
 
 /**
  * This class is a Guice module that tells Guice how to bind several
