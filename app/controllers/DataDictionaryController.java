@@ -19,50 +19,49 @@ import java.util.Vector;
 public class DataDictionaryController extends Controller {
 
     @Inject
-    DataDictionary data_dictionary ;
+    DataDictionary data_dictionary;
 
     @Inject
     PhraseProcessor prase_processor;
 
     /**
      * Default display method for 'index.html' page
+     *
      * @return Result
      */
     public Result index() {
 
-        return ok("Welcome to Leadspace-exercise.\nBy Shiri Rave.\nSince 21/12/17");
+        return ok("Welcome to Leadspace-exercise.\n\nBy Shiri Rave.\n\nSince 21/12/17");
     }
 
-    public Result updateDataDictionaryByPath(String fileName) {
+    public Result replaceDataDictionaryByPath(String fileName) {
 
-            try {
+        try {
 
-                FileInputStream fstream = new FileInputStream(fileName);
-                DataDictionaryUpdateResult upload_result = data_dictionary.updateDataDictionaryFromFile(fstream);
-                String upload_message = upload_result.getMessage();
-                return upload_result.uploadSucceeded()? ok(upload_message) : badRequest(upload_message);
-            }
-            catch(FileNotFoundException e){
-                String msg = "Failed to find required file with name:"+fileName+", Exception thrown with message:"+e.getMessage()+",And stack " +
-                        "trace:"+e.getStackTrace().toString();
-                return handleFileUploadError(msg);
-            }
-            catch(Exception e){
-                String msg = "Failed to perform data-dictionary-load from file to file with name:"+fileName+". Exception thrown with message:"+e
-                        .getMessage()+" And stack-trace:"+e.getStackTrace().toString();
+            FileInputStream fstream = new FileInputStream(fileName);
+            DataDictionaryUpdateResult upload_result = data_dictionary.updateDataDictionaryFromFile(fstream);
+            String upload_message = upload_result.getMessage();
+            return upload_result.uploadSucceeded() ? ok(upload_message) : badRequest(upload_message);
+        } catch (FileNotFoundException e) {
+            String msg = "Failed to find required file with name:" + fileName + ", Exception thrown with message:" + e.getMessage() + ",And stack " +
+                    "trace:" + e.getStackTrace().toString();
+            return handleFileUploadError(msg);
+        } catch (Exception e) {
+            String msg = "Failed to perform data-dictionary-load from file to file with name:" + fileName + ". Exception thrown with message:" + e
+                    .getMessage() + " And stack-trace:" + e.getStackTrace().toString();
 
-                return handleFileUploadError(msg);
-            }
-
+            return handleFileUploadError(msg);
         }
 
-    private Result handleFileUploadError(String msg){
+    }
+
+    private Result handleFileUploadError(String msg) {
 
         Logger.error(msg);
         return badRequest(msg);
     }
 
-    public Result updateDataDictionary() {
+    public Result replaceDataDictionary() {
 
         try {
             File file_to_upload = request().body().asRaw().asFile();
@@ -71,15 +70,13 @@ public class DataDictionaryController extends Controller {
                 return handleFileUploadError(msg);
             }
 
-            FileInputStream fstream = new FileInputStream(file_to_upload );
+            FileInputStream fstream = new FileInputStream(file_to_upload);
             DataDictionaryUpdateResult upload_result = data_dictionary.updateDataDictionaryFromFile(fstream);
             String upload_message = upload_result.getMessage();
-            return upload_result.uploadSucceeded()? ok(upload_message) : badRequest(upload_message);
-        }
-
-        catch(Exception e){
-            String msg = "Failed to perform data-dictionary-load from file to file. Exception thrown with message:"+e
-                    .getMessage()+" And stack-trace:"+e.getStackTrace().toString();
+            return upload_result.uploadSucceeded() ? ok(upload_message) : badRequest(upload_message);
+        } catch (Exception e) {
+            String msg = "Failed to perform data-dictionary-load from file to file. Exception thrown with message:" + e
+                    .getMessage() + " And stack-trace:" + e.getStackTrace().toString();
             Logger.error(msg);
             return handleFileUploadError(msg);
         }
@@ -90,7 +87,7 @@ public class DataDictionaryController extends Controller {
     // http://localhost:9000/categorize?phrase=Vice+President+of+Sales+and+Marketing
     public Result categorize(String phrase) {
         HashSet<String> data = data_dictionary.getWordDictionary();
-        Vector<PhraseResult> results = prase_processor.aggregatePhraseResults(phrase,data);
+        Vector<PhraseResult> results = prase_processor.aggregatePhraseResults(phrase, data);
         return ok(PhraseResult.resultsToJson(results));
     }
 
@@ -99,13 +96,18 @@ public class DataDictionaryController extends Controller {
         HashSet<String> data = data_dictionary.getWordDictionary();
         StringBuilder result_sb = new StringBuilder("Detected the following values in the data-dictionary:\n\n");
         Iterator data_iterator = data.iterator();
-        while(data_iterator.hasNext()){
+        while (data_iterator.hasNext()) {
             result_sb.append(data_iterator.next());
-            if(data_iterator.hasNext()){
+            if (data_iterator.hasNext()) {
                 result_sb.append(", ");
             }
         }
         return ok(result_sb.toString());
+    }
+
+    public Result resetDictionary() {
+        data_dictionary.init();
+        return ok("Data dictionary reset to default 9 values. see the full list under {base_url}/list_dictionary_content");
     }
 
 }

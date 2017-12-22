@@ -7,9 +7,11 @@ GET     /                           controllers.DataDictionaryController.index
 
 GET     /categorize                 controllers.DataDictionaryController.categorize(phrase:String)
 
-GET    /update_dictionary          controllers.DataDictionaryController.updateDataDictionaryByPath(fileNameAndPath:String)
+GET    /replace_dictionary          controllers.DataDictionaryController.replaceDataDictionaryByPath(fileNameAndPath:String)
 
-POST   /update_dictionary          controllers.DataDictionaryController.updateDataDictionary()
+POST   /replace_dictionary          controllers.DataDictionaryController.replaceDataDictionary()
+
+GET    /reset_dictionary            controllers.DataDictionaryController.resetDictionary()
 
 GET    /list_dictionary_content    controllers.DataDictionaryController.listDataDictionaryContent()
 

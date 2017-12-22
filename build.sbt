@@ -11,5 +11,3 @@ libraryDependencies ++= Seq(
   cache,
   javaWs
 )
-
-libraryDependencies += "org.json" % "json" % "20171018"

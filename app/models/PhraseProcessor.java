@@ -22,7 +22,7 @@ public class PhraseProcessor {
         Integer max_word_length = 0;
         // Max word present in the data-store -
         String max_word = null;
-        //todo: there must be a more elegant way to write this..
+
         while(word_iterator.hasNext()){
             String current_word = word_iterator.next();
             if(sub_phrase.contains(current_word) && max_word_length < current_word.length()){
