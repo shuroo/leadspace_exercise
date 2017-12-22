@@ -4,6 +4,7 @@ import play.Logger;
 
 import java.io.*;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Vector;
 /**
  * Created by shirirave on 20/12/2017.
@@ -41,12 +42,11 @@ public class DataDictionary {
         Logger.info("Successfully updated default-values of 9 words to the word-dictionary.");
     }
 
-    public DataDictionaryUpdateResult updateDataDictionaryFromFile (FileInputStream file_is)   throws Exception {
+    public DataDictionaryReplaceResult updateDataDictionaryFromFile (FileInputStream file_is)   throws Exception {
 
 
-    BufferedReader br = new BufferedReader(new InputStreamReader(file_is));
+        BufferedReader br = new BufferedReader(new InputStreamReader(file_is));
         // initially clear the local data-store to update it
-        //word_dictionary.clear();
         Vector word_dictionary_clone = new Vector();
         String strLine;
 
@@ -61,7 +61,7 @@ public class DataDictionary {
             String message = "Failed to perform update-data-dictionary operation. operation aborted. Exception thrown with " +
                     "Message:"+e.getMessage()+",Stack trace:"+e.getStackTrace().toString();
             Logger.error(message);
-            return new DataDictionaryUpdateResult(false,message);
+            return new DataDictionaryReplaceResult(false,message);
         }
         finally{
             //Close the input stream
@@ -72,16 +72,30 @@ public class DataDictionary {
         if(word_dictionary_clone.isEmpty()){
             String message = "Attempt to update empty dictionary detected. no words found - or file read operation failed. Operation Aborted.";
             Logger.error(message);
-            return new DataDictionaryUpdateResult(false,message);
+            return new DataDictionaryReplaceResult(false,message);
         }
         word_dictionary.clear();
         word_dictionary.addAll(word_dictionary_clone);
         String message = "Data-Dictionary Upload operation succeded. Updated:"+word_dictionary.size()+" words successfully";
         // In production - we may wish to reduce this logger to a lower level to reduce stress on some related systems. we can use 'trace' instead.
         Logger.info(message);
-        return new DataDictionaryUpdateResult(true,message);
+        return new DataDictionaryReplaceResult(true,message);
 
 
+    }
+
+    public String dictionaryContentToString(){
+        HashSet<String> data = this.getWordDictionary();
+        StringBuilder result_sb = new StringBuilder("Detected the following values in the data-dictionary:\n\n");
+        Iterator data_iterator = data.iterator();
+        while (data_iterator.hasNext()) {
+            result_sb.append(data_iterator.next());
+            if (data_iterator.hasNext()) {
+                result_sb.append(", ");
+            }
+        }
+
+        return result_sb.toString();
     }
 
 }
