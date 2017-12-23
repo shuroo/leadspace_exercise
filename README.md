@@ -1,6 +1,3 @@
-Hi,
-
-
 Here is my solution to the Leadspace exercise.
 
 The Base-cloud-url for this project is here:  https://leadspace-exercise.herokuapp.com/
