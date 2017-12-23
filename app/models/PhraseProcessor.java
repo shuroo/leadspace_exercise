@@ -11,6 +11,12 @@ import java.util.Vector;
  */
 public class PhraseProcessor {
 
+    /**
+     * - Aid-method to reduce a given term from the total phrase given.
+     * @param term - The term to reduce.
+     * @param sub_phrase - The phrase to reduce the given term from.
+     * @return String
+     */
     private String reduceTermFromSubPhrase(PhraseAnalysisResult term,String sub_phrase){
         return sub_phrase.substring(0,term.getSubPhraseOffset())+sub_phrase.substring(term.getSubPhraseOffset()
                         + term.getTerm().length(),
