@@ -3,8 +3,8 @@ package controllers;
 import com.google.inject.Inject;
 import models.DataDictionary;
 import models.DataDictionaryReplaceResult;
+import models.PhraseAnalysisResult;
 import models.PhraseProcessor;
-import models.PhraseResult;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -66,8 +66,8 @@ public class DataDictionaryController extends Controller {
      */
     public Result categorize(String phrase) {
         HashSet<String> data = data_dictionary.getWordDictionary();
-        Vector<PhraseResult> results = prase_processor.aggregatePhraseResults(phrase, data);
-        return ok(PhraseResult.resultsToJson(results));
+        Vector<PhraseAnalysisResult> results = prase_processor.aggregatePhraseResults(phrase, data);
+        return ok(PhraseAnalysisResult.resultsToJson(results));
     }
 
     /**

@@ -1,6 +1,6 @@
 import models.DataDictionary;
 import models.PhraseProcessor;
-import models.PhraseResult;
+import models.PhraseAnalysisResult;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
@@ -33,21 +33,22 @@ public class PhraseProcessorTest {
         HashSet data = data_dictionary.getWordDictionary();
         String phrase = "Vice President of Sales and Marketing";
         PhraseProcessor prase_processor = new PhraseProcessor();
-        Vector<PhraseResult> results = prase_processor.aggregatePhraseResults(phrase,data);
+        Vector<PhraseAnalysisResult> results = prase_processor.aggregatePhraseResults(phrase,data);
 
         assert (results.size() == 3);
-        assert (results.get(0).getWord().equals("Vice President"));
+        assert (results.get(0).getTerm().equals("Vice President"));
         assert (results.get(0).getOffset().equals(0));
-        assert (results.get(1).getWord().equals("Marketing"));
+        assert (results.get(1).getTerm().equals("Marketing"));
         assert (results.get(1).getOffset().equals(28));
-        assert (results.get(2).getWord().equals("Sales"));
+        assert (results.get(2).getTerm().equals("Sales"));
         assert (results.get(2).getOffset().equals(18));
 
     }
 
     /**
      * - Test for phrase analysis :
-     * - Expected result: Do not Identify 'Vice Pres' as word (not whole) while 'Vice president' is the value in the data dictionary.
+     * - Expected result: Do not Identify 'Vice Pres' as valid term (not whole)
+     *   While 'Vice president' is the value in the data dictionary.
      */
     @Test
     public void testPhraseProcessorWholeWord(){
@@ -59,12 +60,12 @@ public class PhraseProcessorTest {
         HashSet data = data_dictionary.getWordDictionary();
         String phrase = "Vice Pres of Sales and Marketing";
         PhraseProcessor prase_processor = new PhraseProcessor();
-        Vector<PhraseResult> results = prase_processor.aggregatePhraseResults(phrase,data);
+        Vector<PhraseAnalysisResult> results = prase_processor.aggregatePhraseResults(phrase,data);
 
         assert (results.size() == 2);
-        assert (!results.get(0).getWord().equals("Vice Pres"));
-        assert (results.get(0).getWord().equals("Marketing"));
-        assert (results.get(1).getWord().equals("Sales"));
+        assert (!results.get(0).getTerm().equals("Vice Pres"));
+        assert (results.get(0).getTerm().equals("Marketing"));
+        assert (results.get(1).getTerm().equals("Sales"));
 
     }
 
@@ -83,11 +84,11 @@ public class PhraseProcessorTest {
         PhraseProcessor prase_processor = new PhraseProcessor();
         HashSet data = data_dictionary.getWordDictionary();
         String phrase = "Shiris Test in Business .. checking A B C ...";
-        Vector<PhraseResult> results = prase_processor.aggregatePhraseResults(phrase,data);
+        Vector<PhraseAnalysisResult> results = prase_processor.aggregatePhraseResults(phrase,data);
 
         assert (results.size() == 2);
-        assert (results.get(0).getWord().equals("Shiris Test"));
-        assert (results.get(1).getWord().equals("Business"));
+        assert (results.get(0).getTerm().equals("Shiris Test"));
+        assert (results.get(1).getTerm().equals("Business"));
 
     }
 }
