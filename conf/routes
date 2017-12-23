@@ -7,7 +7,7 @@ GET     /                           controllers.DataDictionaryController.index
 
 GET     /categorize                 controllers.DataDictionaryController.categorize(phrase:String)
 
-GET    /replace_dictionary          controllers.DataDictionaryController.replaceDataDictionaryByPath(fileNameAndPath:String)
+GET    /replace_dictionary          controllers.DataDictionaryController.replaceDataDictionaryByPath(fileName:String)
 
 POST   /replace_dictionary          controllers.DataDictionaryController.replaceDataDictionary()
 

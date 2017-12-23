@@ -11,8 +11,9 @@ import java.util.Vector;
 /**
  * Created by shirirave on 20/12/2017.
  *
- * This better be replaced by a database / datastore in "real life", for bigger amounts of data.
- * Fore a first implementation we will store the data-in-memory using internal data sturcture (Vector)
+ * - Class to store the data-dictionary in memory.
+ *   [ This better be replaced by a database / datastore in "real life", for bigger amounts of data. ]
+ *   For a first implementation we will store the data-in-memory using internal data sturcture (HashSet - to avoid duplicate values )
  */
 public class DataDictionary {
 
@@ -25,8 +26,21 @@ public class DataDictionary {
     public DataDictionary(){
         this.init();
     }
+
     /**
-     * Use this endpoint related to update the data-distionary to the following default values:
+     * Private method to handle faiure in case of exception
+     * @param e
+     * @param message
+     * @return
+     */
+    private DataDictionaryReplaceResult handleReplaceOperationFailure(Exception e,String message){
+        Logger.error(message,e);
+        return new DataDictionaryReplaceResult(false,message);
+    }
+    /**
+     * - Method to define default values of the data dictionary and reset them. Values:
+     *
+     *   "President","Vice President", "Sales","Marketing","IT","CFO","CTO","Banking"
      */
     public void init(){
         HashSet<String> data = new HashSet();
@@ -44,7 +58,13 @@ public class DataDictionary {
         Logger.info("Successfully updated default-values of 9 words to the word-dictionary.");
     }
 
-    public DataDictionaryReplaceResult updateDataDictionaryFromFile (FileInputStream file_is)   throws Exception {
+    /**
+     * - Method to replace the current data-dictionary by fetching new values from text file and overriding it
+     *   (Unless the file is empty or the fetch operation fails)
+     *   @param file_is - file input steam
+     *   @return DataDictionaryReplaceResult (Class)
+     */
+    public DataDictionaryReplaceResult replaceDataDictionaryByFile(FileInputStream file_is) {
 
 
         BufferedReader br = new BufferedReader(new InputStreamReader(file_is));
@@ -60,14 +80,18 @@ public class DataDictionary {
             }
         }
         catch(Exception e){
-            String message = "Failed to perform update-data-dictionary operation. operation aborted. Exception thrown with " +
-                    "Message:"+e.getMessage()+",Stack trace:"+e.getStackTrace().toString();
-            Logger.error(message);
-            return new DataDictionaryReplaceResult(false,message);
+            String message = "Failed to perform update-data-dictionary operation. operation aborted. Exception thrown. see details";
+            return handleReplaceOperationFailure(e,message);
         }
         finally{
-            //Close the input stream
-            br.close();
+            //Try to Close the input stream.
+            try {
+                br.close();
+            }
+            catch(Exception e){
+                String message = "Failed to perform update-data-dictionary operation. failed to close file - operation aborted. Exception thrown - see details";
+                return handleReplaceOperationFailure(e,message);
+            }
         }
 
         // Assuming the operation succeeded, copy the temp-vector's content to the data-store
@@ -86,7 +110,14 @@ public class DataDictionary {
 
     }
 
-    public String dictionaryContentToString(){
+    /**
+     * - Method to display the dictionary as string.
+     * - Overrides the default 'toString' method.
+     *   @return String
+     *
+     */
+    @Override
+    public String toString(){
         HashSet<String> data = this.getWordDictionary();
         StringBuilder result_sb = new StringBuilder("Detected the following values in the data-dictionary:\n\n");
         Iterator data_iterator = data.iterator();

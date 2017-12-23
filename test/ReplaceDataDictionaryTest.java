@@ -11,6 +11,10 @@ import java.io.File;
  */
 public class ReplaceDataDictionaryTest {
 
+    /**
+     * - Test method for Data dictionary update by replacing it with file content.
+     * - Expected result: The data dictionary contains the same number of words and values as in the created files.
+     */
     @Test
     public void testReplaceDataDictionary() throws Exception{
         // As the application did not start normally,
@@ -21,10 +25,10 @@ public class ReplaceDataDictionaryTest {
 
         File file_written = CreateTestsData.createTwoWordFileForDataDictionaryTestReplace();
 
-        data_dictionary.updateDataDictionaryFromFile(FileUtils.openInputStream(file_written));
+        data_dictionary.replaceDataDictionaryByFile(FileUtils.openInputStream(file_written));
         assert (data_dictionary.getWordDictionary().size() == 2);
         File file_written2 = CreateTestsData.createThreeWordFileForDataDictionaryTestReplace();
-        data_dictionary.updateDataDictionaryFromFile(FileUtils.openInputStream(file_written2));
+        data_dictionary.replaceDataDictionaryByFile(FileUtils.openInputStream(file_written2));
         assert (data_dictionary.getWordDictionary().size() == 3);
 
     }

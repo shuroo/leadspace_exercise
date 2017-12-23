@@ -14,6 +14,11 @@ import java.util.List;
  */
 public class CreateTestsData {
 
+    /**
+     * Create file containing two words only to be later used for data-dictionary tests.
+     * @return File
+     * @throws IOException
+     */
     public static File createTwoWordFileForDataDictionaryTestReplace() throws IOException {
         String test_file_name = "replace-file-test.txt";
         List<String> lines = Arrays.asList("President", "Shiris Test");
@@ -22,6 +27,11 @@ public class CreateTestsData {
         return new File(test_file_name);
     }
 
+    /**
+     * Create file containing three words only to be later used for data-dictionary tests.
+     * @return File
+     * @throws IOException
+     */
     public static File createThreeWordFileForDataDictionaryTestReplace() throws IOException {
         String test_file_name = "replace-file-test2.txt";
         List<String> lines = Arrays.asList("President", "Shiris Test","Business");

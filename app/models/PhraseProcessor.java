@@ -7,17 +7,25 @@ import java.util.Vector;
 /**
  * Created by shirirave on 20/12/2017.
  *
- * Class to process the phrase content, to return pairs: (offset + ) per step.
+ * Class to process the phrase content, to return pairs: (offset + phrase) per step.
  */
 public class PhraseProcessor {
 
     /**
-     * Return the maximum word length found in the dictionary
-     * @param phrase
-     * @param data
-     * @return
+     * - Aid method for 'categorize' endpoint's implementation.
+     * - Returns the maximum phrase found in the dictionary which also exists in a given sub-phrase.
+     * - Prioritizes longer phrases over short sub-phrase of them (like 'Vice President' and 'President')
+     * @param phrase - the total phrase to analyze
+     * @param sub_phrase - the sub-phrase to analyse (this is used to make sure sub-phrases (like 'President')
+     * Are not researched after including longer phrases containing them (like 'Vice President')
+     * In the analysis result
+     *
+     * *** The algorithm is case-sensitive.  ***
+     *
+     * @param data - the data-dictionary to search in.
+     * @return PhraseResult - Struct
      */
-    public  PhraseResult getMaximalWordInDictionary(String sub_phrase,String phrase,HashSet<String> data){
+    private PhraseResult getMaximalWordInDictionary(String sub_phrase,String phrase,HashSet<String> data){
         Iterator<String> word_iterator = data.iterator();
         Integer max_word_length = 0;
         // Max word present in the data-store -
@@ -38,6 +46,19 @@ public class PhraseProcessor {
         return new PhraseResult(offset,sub_phrase_offset,max_word);
     }
 
+    /**
+     * - Main method to implement data-dictionary phrase identification analysis
+     *   (Business logic for 'categorize' endpoint)
+     * - Fetch from the given phrase, sub-phrases present in the given data dictionary.
+     * - In case of dillema (having one phrase as another's sub-phrase)
+     * - Prioritize the results given by length (Return the longer sub-phrase).
+     *
+     * *** The algorithm is case-sensitive.  ***
+     *
+     * @param phrase - The phrase to search in.
+     * @param data - The data-dictionary given.
+     * @return Vector<PhraseResult> : Collection of found phrases (sorted by length in a descending order).
+     */
     public Vector<PhraseResult> aggregatePhraseResults(String phrase,HashSet<String> data){
         Vector<PhraseResult> phrase_results = new Vector<PhraseResult>() ;
         String sub_phrase = phrase;

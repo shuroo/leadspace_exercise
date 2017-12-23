@@ -3,10 +3,10 @@ package models;
 /**
  * Created by shirirave on 21/12/2017.
  *
- * Class to represent the 'struct' coming as a result of data dictionary replace operation:
+ * - Class to represent the 'struct' coming as a result of data dictionary replace operation:
  *
- * @Param isSuccess - indication for replace operation success (Boolean)
- * @Param message - the operation related message
+ *   @Param isSuccess - indication for replace operation success (Boolean)
+ *   @Param message - the operation related message
  */
 public class DataDictionaryReplaceResult {
 
@@ -22,7 +22,7 @@ public class DataDictionaryReplaceResult {
     }
 
     /**
-     * Getter for 'isSuccess' field
+     * Getter for 'isSuccess' property
      * @return Boolean
      */
     public boolean uploadSucceeded() {
@@ -30,7 +30,7 @@ public class DataDictionaryReplaceResult {
     }
 
     /**
-     * Getter for 'Message' field
+     * Getter for 'Message' property
      * @return String
      */
     public String getMessage() {

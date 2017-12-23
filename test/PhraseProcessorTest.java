@@ -19,9 +19,9 @@ import java.util.Vector;
 public class PhraseProcessorTest {
 
     /**
-     * Test for phrase analysis :
-     * Expected result: Identify 'Vice President' and prefer it over 'president'; identify 'Sales', 'Marketing'.
-     * Identify and return expected offsets in phrase.
+     * - Test method for phrase analysis :
+     * - Expected result: Identify 'Vice President' and prefer it over 'President'; identify 'Sales', 'Marketing'.
+     *   Identify and return expected offsets in phrase.
      */
     @Test
     public void testPhraseProcessor(){
@@ -46,8 +46,8 @@ public class PhraseProcessorTest {
     }
 
     /**
-     * Test for phrase analysis :
-     * Expected result: Do not Identify 'Vice Pres' as word (not whole) while 'Vice president' is the value in the data dictionary.
+     * - Test for phrase analysis :
+     * - Expected result: Do not Identify 'Vice Pres' as word (not whole) while 'Vice president' is the value in the data dictionary.
      */
     @Test
     public void testPhraseProcessorWholeWord(){
@@ -68,13 +68,18 @@ public class PhraseProcessorTest {
 
     }
 
+    /**
+     * - Test method for phrase analysis :
+     * - Expected result: 'Shiris Test' 'Business' , are phrases identified (present in the dictionary) and returned.
+     */
+
     @Test
     public void testPhraseProcessor3() throws Exception{
         // As the application did not start normally,
         // We have no ability to inject this DD class her (unless adding some test library like 'mockito' ..)
         DataDictionary data_dictionary = new DataDictionary();
         File file_written2 = CreateTestsData.createThreeWordFileForDataDictionaryTestReplace();
-        data_dictionary.updateDataDictionaryFromFile(FileUtils.openInputStream(file_written2));
+        data_dictionary.replaceDataDictionaryByFile(FileUtils.openInputStream(file_written2));
         PhraseProcessor prase_processor = new PhraseProcessor();
         HashSet data = data_dictionary.getWordDictionary();
         String phrase = "Shiris Test in Business .. checking A B C ...";

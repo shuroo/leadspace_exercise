@@ -11,6 +11,10 @@ import java.io.File;
  */
 public class ResetDataDictionaryTest {
 
+    /**
+     * - Test method for data dictionary reset method.
+     * - Expected result: The data dictionary contains 8 default values after each reset ( - 'init') operation.
+     */
     @Test
     public void testResetDictionary() throws Exception{
         // As the application did not start normally,
@@ -21,7 +25,7 @@ public class ResetDataDictionaryTest {
 
         File file_written = CreateTestsData.createTwoWordFileForDataDictionaryTestReplace();
 
-        data_dictionary.updateDataDictionaryFromFile(FileUtils.openInputStream(file_written));
+        data_dictionary.replaceDataDictionaryByFile(FileUtils.openInputStream(file_written));
         assert (data_dictionary.getWordDictionary().size() == 2);
         data_dictionary.init();
         assert (data_dictionary.getWordDictionary().size() == 8);
