@@ -13,5 +13,5 @@ POST   /replace_dictionary          controllers.DataDictionaryController.replace
 
 GET    /reset_dictionary            controllers.DataDictionaryController.resetDictionary()
 
-GET    /list_dictionary_content    controllers.DataDictionaryController.listDataDictionaryContent()
+GET    /list_dictionary_content     controllers.DataDictionaryController.listDataDictionaryContent()
 

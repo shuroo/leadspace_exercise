@@ -55,7 +55,7 @@ public class DataDictionary {
 
         word_dictionary.clear();
         word_dictionary.addAll(data);
-        Logger.info("Successfully updated default-values of 9 words to the word-dictionary.");
+        Logger.info("Successfully updated default-values of "+word_dictionary.size()+" words to the word-dictionary.");
     }
 
     /**
