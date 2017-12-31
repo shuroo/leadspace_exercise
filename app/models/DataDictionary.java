@@ -80,7 +80,8 @@ public class DataDictionary {
             }
         }
         catch(Exception e){
-            String message = "Failed to perform update-data-dictionary operation. operation aborted. Exception thrown. see details";
+            String message = "Failed to perform update-data-dictionary operation. operation aborted. . Exception thrown. Exception:"+e.toString()+",Message:"+e
+                    .getMessage();
             return handleReplaceOperationFailure(e,message);
         }
         finally{
@@ -89,7 +90,8 @@ public class DataDictionary {
                 br.close();
             }
             catch(Exception e){
-                String message = "Failed to perform update-data-dictionary operation. failed to close file - operation aborted. Exception thrown - see details";
+                String message = "Failed to perform update-data-dictionary operation. failed to close file - operation aborted.Exception thrown. Exception:"+e.toString()+",Message:"+e
+                        .getMessage();
                 return handleReplaceOperationFailure(e,message);
             }
         }

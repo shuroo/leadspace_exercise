@@ -45,6 +45,42 @@ public class PhraseProcessorTest {
 
     }
 
+    @Test
+    public void testPhraseProcessor2(){
+
+        // As the application did not start normally,
+        // We have no ability to inject this DD class her (unless adding some test library like 'mockito' ..)
+        DataDictionary data_dictionary = new DataDictionary();
+        data_dictionary.init();
+        HashSet data = data_dictionary.getWordDictionary();
+        String phrase = "Vice President of Sales and Marketinging";
+        PhraseProcessor prase_processor = new PhraseProcessor();
+        Vector<PhraseAnalysisResult> results = prase_processor.aggregatePhraseResults(phrase,data);
+
+        assert (results.size() == 2);
+        assert (!results.get(1).getTerm().equals("Marketing"));
+
+    }
+
+    @Test
+    public void testContainsWords(){
+
+        // As the application did not start normally,
+        // We have no ability to inject this DD class her (unless adding some test library like 'mockito' ..)
+        DataDictionary data_dictionary = new DataDictionary();
+        data_dictionary.init();
+        HashSet data = data_dictionary.getWordDictionary();
+        String phrase = "Vice President of Sales and Marketinging";
+        PhraseProcessor prase_processor = new PhraseProcessor();
+        assert (prase_processor.phraseContainsWholeWords(phrase,"Vice President") == true);
+        assert (prase_processor.phraseContainsWholeWords(phrase,"Vice Pres") == false);
+        assert (prase_processor.phraseContainsWholeWords(phrase,"Marketing") == false);
+        assert (prase_processor.phraseContainsWholeWords(phrase,"Sales") == true);
+        assert (prase_processor.phraseContainsWholeWords(phrase,"Sale") == false);
+        assert (prase_processor.phraseContainsWholeWords(phrase,"sales") == false);
+
+    }
+
     /**
      * - Test for phrase analysis :
      * - Expected result: Do not Identify 'Vice Pres' as valid term (not whole)

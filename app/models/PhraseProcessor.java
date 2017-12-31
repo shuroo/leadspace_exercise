@@ -25,6 +25,40 @@ public class PhraseProcessor {
     }
 
     /**
+     * - Aid Method to check whether an expression contains the exact words (whole words) in a given term or not.
+     * - Used to prevent false-positives bug (For example, identifying 'Marketing' as a valid term contained in the phrase: 'bla+bla+marketinginging'
+     *
+     * @param main_phrase - The phrase to analyze
+     * @param term - The term to check words against
+     * @return Boolean
+     */
+    public boolean phraseContainsWholeWords(String main_phrase,String term){
+        String [] term_words = term.split(" ");
+        String [] main_phrase_words = main_phrase.split(" ");
+        Boolean [] words_contained_results = new Boolean [term_words.length];
+        int index = 0;
+            for (String term_word : term_words) {
+                // Init cell in results array -
+                words_contained_results[index] = false;
+                for(String phrase_word : main_phrase_words) {
+                    if (term_word.equals(phrase_word)) {
+                        // Set the result to true.
+                        words_contained_results[index] = true;
+                        index++;
+                    }
+                }
+            }
+
+           for(Boolean result : words_contained_results) {
+                if(!result) {
+                    return false;
+                }
+           }
+
+           return true;
+    }
+
+    /**
      * - Aid method for 'categorize' endpoint's implementation.
      * - Returns the maximum phrase found in the dictionary which also exists in a given sub-phrase.
      * - Prioritizes longer phrases over short sub-phrase of them (like 'Vice President' and 'President')
@@ -47,7 +81,7 @@ public class PhraseProcessor {
 
         while(word_iterator.hasNext()){
             String current_word = word_iterator.next();
-            if(sub_phrase.contains(current_word) && max_word_length < current_word.length()){
+            if(phraseContainsWholeWords(sub_phrase,current_word) && max_word_length < current_word.length()){
                 max_term = current_word;
                 max_word_length = current_word.length();
 
@@ -87,4 +121,5 @@ public class PhraseProcessor {
 
         return phrase_results;
     }
+
 }
